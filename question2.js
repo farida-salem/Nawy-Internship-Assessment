@@ -1,19 +1,23 @@
 function transformDateFormat(dates) {
     let result = [];
     dates.forEach(date => {
-        if (date.includes('/')) {
-            let dateArr = date.split('/');
-            if (dateArr[0].length === 4) {
-                result.push(dateArr[0] + dateArr[1].padStart(2, '0') + dateArr[2].padStart(2, '0'));
-            } else {
-                result.push(dateArr[2] + dateArr[1].padStart(2, '0') + dateArr[0].padStart(2, '0'));
-            }
-        } else if (date.includes('-')) {
-            let dateArr = date.split('-');
-            result.push(dateArr[2] + dateArr[0].padStart(2, '0') + dateArr[1].padStart(2, '0'));
+        let day, month, year;
+        if (/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/.test(date)) {
+
+            [year, month, day] = date.split('/');
+
+        } else if (/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/.test(date)) {
+            [day, month, year] = date.split('/');
+        }
+        else if (/[0-9]{2}-[0-9]{2}-[0-9]{4}/.test(date)) {
+            [month, day, year] = date.split('-');
+        }
+
+        if (year && month && day && parseInt(month) <= 12) {
+            result.push(year + month + day);
         }
     });
     return result;
 }
-const dates = ["2010/02/20", "19/12/2016", "11-18-2012", "20130720"];
+const dates = ["2010/02/20", "19/12/2016", "11-18-2012", "20130720", "30-12-2015", "12/13/2014"];
 console.log(transformDateFormat(dates));

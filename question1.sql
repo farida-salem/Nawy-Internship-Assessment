@@ -5,9 +5,9 @@ SELECT
 FROM 
     colleges
 JOIN 
-    students ON colleges.id = students.collegeId
+    students ON colleges.id = students."collegeId"
 JOIN 
-    rankings ON students.id = rankings.studentId
+    rankings ON students.id = rankings."studentId"
 WHERE 
     rankings.year = 2015
     AND rankings.ranking BETWEEN 1 AND 3
